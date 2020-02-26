@@ -2,10 +2,10 @@ const Koa = require('./koa');
 
 const app = new Koa();
 
-app.use((ctx, next) => {
+app.use(async(ctx, next) => {
     console.log(1);
     ctx.body = '1';
-    next();
+    await next();
     setTimeout(() => {
         ctx.body = '11';
     })
