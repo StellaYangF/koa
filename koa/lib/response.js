@@ -1,4 +1,6 @@
 module.exports = {
+    _body: undefined,
+
     get header() {
         const { res } = this;
         return res.getHeaders();
@@ -17,7 +19,16 @@ module.exports = {
     },
 
     set body(val) {
-        const original = this._body;
+        this.statusCode(200);
         this._body = val;
+    },
+    
+    statusCode(newValue) {
+        this.res.statusCode = newValue;
+    },
+
+    set(...args) {
+        console.log(args);
+        this.res.setHeader(...args);
     }
 }
