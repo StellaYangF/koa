@@ -6,9 +6,7 @@ app.use(async(ctx, next) => {
     console.log(1);
     ctx.body = '1';
     await next();
-    setTimeout(() => {
-        ctx.body = '11';
-    })
+    ctx.body = '11';
     console.log(4);
 });
 
