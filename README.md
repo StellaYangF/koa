@@ -180,6 +180,13 @@ module.exports = class Koa extends Emitter{
     }
 }
 ```
+解析：
+- `Object.create(targetObject);` 这里的 `targetObject` 是 `context`, `response`, `request`，该步是将准备好的三个对象进行原型链继承
+- `context`：内部运用了 `Object.prototype.__defineGetter__` 和 `Object.prototype.__defineSetter` ，该步就是改写 `context` 属性为访问属性，取值和赋值的时候通过函数形式，多一些逻辑操作。如：`context.method` 当前的 `context` 上并没有 `method` 属性，通过 `Object.prototype.__defineGetter__` 调用时，内部返回 `response.method`则可以完成取值。
+- `response` 和 `request` 都是扩充了原生的 `req`, `res` 的对象上的方法和属性。如：`req.method` 就是在扩充的 `response` 的属性上添加的
+
+图示：
+<img src="./imgs/koa_proto__.png"/>
 
 #### `context.js`
 ```js
